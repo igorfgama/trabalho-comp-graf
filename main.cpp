@@ -1,10 +1,10 @@
 // Menu.c - Isabel H. Manssour
 // Um programa OpenGL simples que exemplifica
-// como exibir textos e utilizar menus e funções 
-// callback para verificar a movimentação do 
+// como exibir textos e utilizar menus e funções
+// callback para verificar a movimentação do
 // mouse na janela GLUT.
-// Este código está baseado nos exemplos 
-// disponíveis no livro "OpenGL SuperBible", 
+// Este código está baseado nos exemplos
+// disponíveis no livro "OpenGL SuperBible",
 // 2nd Edition, de Richard S. e Wright Jr.
 
 #include <GL/glut.h>
@@ -27,14 +27,14 @@ GLfloat win, r, g, b, fAspect;
 GLint view_w, view_h, dados;
 
 
-void DesenhaTexto(char *string, int x, int y) 
-{  
+void DesenhaTexto(char *string, int x, int y)
+{
   	glPushMatrix();
-        // Posição no universo onde o texto será colocado          
-        glRasterPos2f(x, y); 
+        // Posição no universo onde o texto será colocado
+        glRasterPos2f(x, y);
         // Exibe caracter a caracter
         while(*string)
-             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*string++); 
+             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*string++);
 	glPopMatrix();
 }
 
@@ -47,6 +47,14 @@ void DesenhaCARACTERISTICAS(void)
         glVertex2f(0, 10);
         glVertex2f(10, 10);
     glEnd();
+
+    glColor3f(0.0f,0.0f,0.0f);
+    DesenhaTexto("Coronavirus (COVID-19): doenca infecciosa causada pelo virus SARS-CoV-2.", -145, -50);
+    DesenhaTexto("A maioria das pessoas que adoece em decorrencia da COVID-19 apresenta sintomas leves a moderados e se recupera sem tratamento especial. ", -145, -57);
+    DesenhaTexto("No entanto, algumas desenvolvem um quadro grave e precisam de atendimento médico. No Brasil, o indice de pessoas infectadas corresponde a", -145, -64);
+    DesenhaTexto("cerca de 10%, e destes, 0,3% foram a obito -- mais de 600 mil mortes no total, figurando entre os paises que mais tiveram mortes em numeros ", -145, -71);
+    DesenhaTexto("absolutos e proporcionais.", -145, -78);
+
 }
 
 // Função que desenha um CARACTERISTICAS
@@ -65,7 +73,7 @@ void DesenhaALFA(void)
     DesenhaTexto("anterior. Tem maior risco de hospitalizacao e maior mortalidade. Foi responsavel pela segunda onda que atacou o Reino Unido e parte da Europa. Chegou ", -145, -64);
     DesenhaTexto("tambem aos EUA, mas não com tanta forca ao Brasil. Resposta as Vacinas: responde normalmente as existentes. Pode ser verificado pelo resposta imune ", -145, -71);
     DesenhaTexto("em testes e o avanco da vacinacao dos paises atingidos por ela.", -145, -78);
-    
+
 }
 
 // Função que desenha um CARACTERISTICAS
@@ -89,12 +97,24 @@ void DesenhaDELTA(void)
 // Função que desenha um BRASIL
 void DesenhaBRASIL(void)
 {
+    /*
      glBegin(GL_QUADS);
                glVertex2f(-25.0f, -25.0f);
                glVertex2f(-25.0f, 25.0f);
                glVertex2f(25.0f, 25.0f);
-               glVertex2f(25.0f, -25.0f);               
+               glVertex2f(25.0f, -25.0f);
      glEnd();
+     */
+
+     glutWireSphere(20.0, 100.0, 100.0);
+
+    glColor3f(0.0f,0.0f,0.0f);
+    DesenhaTexto("BRASIL", -145, -50);
+    DesenhaTexto("Total de Casos: 21,7 mi (10% da populacao)", -145, -57);
+    DesenhaTexto("Mortes: 604 mil (0,03% da populacao e 0,3% dos infectados)", -145, -64);
+    DesenhaTexto("Vacinacao: 100,4 mi (50% da populacao)", -145, -71);
+    DesenhaTexto("Dados de 20/Out/2021", -145, -120);
+    DesenhaTexto("Fonte: Google.com, Wikipedia.com, Our World In Data", -145, -127);
 }
 
 // Função que desenha um triângulo
@@ -111,7 +131,7 @@ void DesenhaBAHIA(void)
     glColor3f(0.0f, 0.0f, 0.0f);
     // Função da GLUT para fazer o desenho de um "torus"
     //glutWireTorus(7.0, 14.0, 20, 40);
-    glutSolidSphere(20.0, 100.0, 100.0);
+    glutWireSphere(20.0, 100.0, 100.0);
     //void glutWireTorus(GLdouble innerRadius, GLdouble outerRadius, Glint nsides, Glint rings)
     // Restaura a matriz de transformação corrente da pilha
     glPopMatrix();
@@ -120,40 +140,36 @@ void DesenhaBAHIA(void)
     glFlush();
 }
 
-
 // Desenha um texto na janela GLUT
 
 
 // Função que desenha um MUNDO
 void DesenhaMUNDO(void)
 {
+
      glBegin(GL_POLYGON);
                glVertex2f(-25.0f, 0.0f);
                glVertex2f(0.0f, 25.0f);
                glVertex2f(25.0f, 0.0f);
-               glVertex2f(0.0f, -25.0f);               
+               glVertex2f(0.0f, -25.0f);
      glEnd();
 
     glColor3f(0.0f,0.0f,0.0f);
     DesenhaTexto("TESTANDO", 0, 0);
 }
 
-
-
-
-
 // Função callback chamada para fazer o desenho
 void Desenha(void)
 {
      glMatrixMode(GL_MODELVIEW);
      glLoadIdentity();
-                   
+
      glClear(GL_COLOR_BUFFER_BIT);
-     
+
      // Define a cor corrente
      glColor3f(r,g,b);
 
-     // Desenha uma dados     
+     // Desenha uma dados
      switch (dados) {
             case CARACTERISTICAS:  DesenhaCARACTERISTICAS();
                             break;
@@ -163,9 +179,9 @@ void Desenha(void)
                             break;
             case BRASIL:  DesenhaBRASIL();
                             break;
-            case BAHIA: DesenhaBAHIA();                          
+            case BAHIA: DesenhaBAHIA();
                             break;
-            case MUNDO:   DesenhaMUNDO();                       
+            case MUNDO:   DesenhaMUNDO();
                             break;
      }
 
@@ -178,7 +194,7 @@ void Desenha(void)
 
 // Inicializa parâmetros de rendering
 void Inicializa (void)
-{   
+{
     // Define a cor de fundo da janela de visualização como preta
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     win=150.0f;
@@ -209,13 +225,13 @@ void EspecificaParametrosVisualizacao(void)
 	gluLookAt(0,60,150, 0,0,0, 0,1,0);
 }
 
-// Função callback chamada quando o tamanho da janela é alterado 
+// Função callback chamada quando o tamanho da janela é alterado
 void AlteraTamanhoJanela(GLsizei w, GLsizei h)
-{ 
+{
     // Especifica as dimensões da Viewport
     glViewport(0, 0, w, h);
     view_w = w;
-    view_h = h;                   
+    view_h = h;
     fAspect = (GLfloat)w/(GLfloat)h;
 
     EspecificaParametrosVisualizacao();
@@ -225,8 +241,8 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
     gluOrtho2D (-win, win, -win, win);
 }
 
-           
-// Gerenciamento do menu com as opções de cores           
+
+// Gerenciamento do menu com as opções de cores
 void MenuSobre(int op)
 {
    switch(op) {
@@ -241,9 +257,9 @@ void MenuSobre(int op)
                      break;
     }
     glutPostRedisplay();
-}           
+}
 
-// Gerenciamento do menu com as opções de cores           
+// Gerenciamento do menu com as opções de cores
 void MenuDados(int op)
 {
    switch(op) {
@@ -258,15 +274,15 @@ void MenuDados(int op)
                      break;
     }
     glutPostRedisplay();
-}   
-        
-// Gerenciamento do menu principal           
+}
+
+// Gerenciamento do menu principal
 void MenuPrincipal(int op)
 {
 }
-              
+
 // Criacao do Menu
-void CriaMenu() 
+void CriaMenu()
 {
     int menu,submenu1,submenu2;
 
@@ -283,31 +299,31 @@ void CriaMenu()
     menu = glutCreateMenu(MenuPrincipal);
 	glutAddSubMenu("Sobre o virus",submenu1);
     glutAddSubMenu("Dados da covid-19",submenu2);
-    
+
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
-           
+
 // Função callback chamada para gerenciar eventos do mouse
 void GerenciaMouse(int button, int state, int x, int y)
-{        
+{
     if (button == GLUT_RIGHT_BUTTON)
-         if (state == GLUT_DOWN) 
+         if (state == GLUT_DOWN)
             CriaMenu();
-         
+
     glutPostRedisplay();
 }
-                      
-// Programa Principal 
+
+// Programa Principal
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);     
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(1280, 720);
     glutInitWindowPosition(10,10);
     glutCreateWindow("Exemplo de Menu e Exibição de Caracteres");
     glutDisplayFunc(Desenha);
     glutReshapeFunc(AlteraTamanhoJanela);
-    glutMouseFunc(GerenciaMouse);    
+    glutMouseFunc(GerenciaMouse);
     Inicializa();
     glutMainLoop();
 }
