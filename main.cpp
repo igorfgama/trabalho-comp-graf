@@ -1,16 +1,10 @@
-// Menu.c - Isabel H. Manssour
-// Um programa OpenGL simples que exemplifica
-// como exibir textos e utilizar menus e funções
-// callback para verificar a movimentação do
-// mouse na janela GLUT.
-// Este código está baseado nos exemplos
-// disponíveis no livro "OpenGL SuperBible",
-// 2nd Edition, de Richard S. e Wright Jr.
-
 #include <GL/glut.h>
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
+#include <vector>
 
+using namespace std;
 // Constantes
 #define CARACTERISTICAS 1
 #define ALFA 2
@@ -25,6 +19,21 @@ char texto[30];
 GLfloat win, r, g, b, fAspect;
 GLint view_w, view_h, dados;
 
+typedef struct {
+    GLfloat x, y, z;
+}vec3;
+
+// Função para desenhar círculo
+void DesenhaCirculo(GLint x, GLint y, GLint raio, int num_linhas){
+    float angulo;
+    glColor3f(0.0, 0.0, 0.0);
+    glBegin(GL_LINE_LOOP);
+    for(int i = 0; i < num_linhas; i++) {
+        angulo = i * 2 * M_PI / num_linhas;
+        glVertex2f(x + (cos(angulo) * raio), y + (sin(angulo) * raio));
+        }
+    glEnd();
+}
 
 void DesenhaTexto(char *string, int x, int y)
 {
@@ -92,21 +101,99 @@ void DesenhaDELTA(void)
     DesenhaTexto("gravemente como em outras regioes do mundo. Apesar disso, ha registro em todas regiões do pais, inclusive no Vale do Sao Francisco.", -145, -71);
 }
 
+// Função que desenha esfera
+
+void desenhaEsfera(float radius, int numStacks, int numSides)
+{
+//    vec3 points[sides * (sides-1)];
+    GLfloat curRadius, curTheta, curRho, deltaTheta, deltaRho, curX,curY,curZ;
+    int curStack, curSlice, numVerts = (numStacks-1)*numSides;
+    vec3 points[numVerts];
+    int curVert = 0;
+    int t;
+
+    deltaTheta = (2*M_PI) / numSides;
+    deltaRho = M_PI / numStacks;
+
+        for (curStack=1; curStack<numStacks; curStack++)
+        {
+            curRho = (3.141/2.0) - curStack*deltaRho;
+            curY = sin(curRho) * radius;
+            curRadius = cos(curRho) * radius;
+            for (curSlice=0; curSlice<numSides; curSlice++)
+            {
+                curTheta = curSlice * deltaTheta;
+                curX = curRadius * cos(curTheta);
+                curZ = -curRadius * sin(curTheta);
+                points[curVert++] = vec3{curX,curY,curZ};
+            }
+        }
+    glBegin(GL_TRIANGLE_FAN);
+        glNormal3d(0,1,0);
+        glVertex3d(0,radius,0);
+        for (t=0; t<numSides; t++)
+        {
+            curX = points[t].x;
+            curY = points[t].y;
+            curZ = points[t].z;
+            glNormal3d(curX, curY, curZ);
+            glVertex3d(curX, curY, curZ);
+        }
+            curX = points[0].x;
+            curY = points[0].y;
+            curZ = points[0].z;
+        glNormal3d(curX, curY, curZ);
+        glVertex3d(curX, curY, curZ);
+    glEnd();
+
+    // part B - draw the 'sides' (quads)
+    int vertIndex;
+    for (curStack=0; curStack<numStacks-2; curStack++)
+    {
+        vertIndex = curStack * numSides;
+        glBegin(GL_QUAD_STRIP);
+            for (curSlice=0; curSlice<numSides; curSlice++)
+            {
+                glNormal3d(points[vertIndex+curSlice].x, points[vertIndex+curSlice].y, points[vertIndex+curSlice].z);
+                glVertex3d(points[vertIndex+curSlice].x, points[vertIndex+curSlice].y, points[vertIndex+curSlice].z);
+
+                glNormal3d(points[vertIndex+numSides+curSlice].x, points[vertIndex+numSides+curSlice].y, points[vertIndex+numSides+curSlice].z);
+                glVertex3d(points[vertIndex+numSides+curSlice].x, points[vertIndex+numSides+curSlice].y, points[vertIndex+numSides+curSlice].z);
+            }
+            glNormal3d(points[vertIndex].x, points[vertIndex].y, points[vertIndex].z);
+            glVertex3d(points[vertIndex].x, points[vertIndex].y, points[vertIndex].z);
+            glNormal3d(points[vertIndex+numSides].x, points[vertIndex+numSides].y, points[vertIndex+numSides].z);
+            glVertex3d(points[vertIndex+numSides].x, points[vertIndex+numSides].y, points[vertIndex+numSides].z);
+        glEnd();
+    }
+
+    // part C - draw the bottom 'lid' (tris)
+    glBegin(GL_TRIANGLE_FAN);
+        glNormal3d(0,-1,0);
+        glVertex3d(0,-radius,0);
+        for (t=0; t<numSides-1; t++)
+        {
+            curX = points[numVerts-1-t].x;
+            curY = points[numVerts-1-t].y;
+            curZ = points[numVerts-1-t].z;
+            glNormal3d(curX, curY, curZ);
+            glVertex3d(curX, curY, curZ);
+        }
+            curX = points[numVerts-1].x;
+            curY = points[numVerts-1].y;
+            curZ = points[numVerts-1].z;
+        glNormal3d(curX, curY, curZ);
+        glVertex3d(curX, curY, curZ);
+    glEnd();
+
+}
+
 
 // Função que desenha um BRASIL
-void DesenhaBRASIL(void)
+void DesenhaBRASIL()
 {
-    /*
-     glBegin(GL_QUADS);
-               glVertex2f(-25.0f, -25.0f);
-               glVertex2f(-25.0f, 25.0f);
-               glVertex2f(25.0f, 25.0f);
-               glVertex2f(25.0f, -25.0f);
-     glEnd();
-     */
-
-     glutWireSphere(20.0, 100.0, 100.0);
-
+    glColor3f(1.0f,0.0f,0.0f);
+	desenhaEsfera(50.0, 150.0, 2.0);
     glColor3f(0.0f,0.0f,0.0f);
     DesenhaTexto("BRASIL", -145, -50);
     DesenhaTexto("Total de Casos: 21,7 mi (10% da populacao)", -145, -57);
