@@ -4,7 +4,6 @@
 #include <math.h>
 #include <vector>
 
-using namespace std;
 // Constantes
 #define CARACTERISTICAS 1
 #define ALFA 2
@@ -23,18 +22,7 @@ typedef struct {
     GLfloat x, y, z;
 }vec3;
 
-// Função para desenhar círculo
-void DesenhaCirculo(GLint x, GLint y, GLint raio, int num_linhas){
-    float angulo;
-    glColor3f(0.0, 0.0, 0.0);
-    glBegin(GL_LINE_LOOP);
-    for(int i = 0; i < num_linhas; i++) {
-        angulo = i * 2 * M_PI / num_linhas;
-        glVertex2f(x + (cos(angulo) * raio), y + (sin(angulo) * raio));
-        }
-    glEnd();
-}
-
+// Desenha texto na tela
 void DesenhaTexto(char *string, int x, int y)
 {
   	glPushMatrix();
@@ -46,63 +34,7 @@ void DesenhaTexto(char *string, int x, int y)
 	glPopMatrix();
 }
 
-// Função que desenha um CARACTERISTICAS
-void DesenhaCARACTERISTICAS(void)
-{
-     glBegin(GL_POLYGON);
-        glVertex2f(0, 0);
-        glVertex2f(10, 0);
-        glVertex2f(0, 10);
-        glVertex2f(10, 10);
-    glEnd();
-
-    glColor3f(0.0f,0.0f,0.0f);
-    DesenhaTexto("Coronavirus (COVID-19): doenca infecciosa causada pelo virus SARS-CoV-2.", -145, -50);
-    DesenhaTexto("A maioria das pessoas que adoece em decorrencia da COVID-19 apresenta sintomas leves a moderados e se recupera sem tratamento especial. ", -145, -57);
-    DesenhaTexto("No entanto, algumas desenvolvem um quadro grave e precisam de atendimento médico. No Brasil, o indice de pessoas infectadas corresponde a", -145, -64);
-    DesenhaTexto("cerca de 10%, e destes, 0,3% foram a obito -- mais de 600 mil mortes no total, figurando entre os paises que mais tiveram mortes em numeros ", -145, -71);
-    DesenhaTexto("absolutos e proporcionais.", -145, -78);
-
-}
-
-// Função que desenha um CARACTERISTICAS
-void DesenhaALFA(void)
-{
-     glBegin(GL_POLYGON);
-        glVertex2f(0, 0);
-        glVertex2f(10, 0);
-        glVertex2f(0, 10);
-        glVertex2f(10, 10);
-    glEnd();
-
-    glColor3f(0.0f,0.0f,0.0f);
-    DesenhaTexto("A primeira variante de preocupação, anteriormente chamada de B.1.1.7. Surgiu no Reino Unido em setembro de 2020. Mutacoes: Sao 22 ao todo, entre as ", -145, -50);
-    DesenhaTexto("que alteram ou nao a estrutura do virus. As principais estao na espicula, membrana que recobre o virus. Transmissibilidade: de 30\% a 50% maior que a", -145, -57);
-    DesenhaTexto("anterior. Tem maior risco de hospitalizacao e maior mortalidade. Foi responsavel pela segunda onda que atacou o Reino Unido e parte da Europa. Chegou ", -145, -64);
-    DesenhaTexto("tambem aos EUA, mas não com tanta forca ao Brasil. Resposta as Vacinas: responde normalmente as existentes. Pode ser verificado pelo resposta imune ", -145, -71);
-    DesenhaTexto("em testes e o avanco da vacinacao dos paises atingidos por ela.", -145, -78);
-
-}
-
-// Função que desenha um CARACTERISTICAS
-void DesenhaDELTA(void)
-{
-     glBegin(GL_POLYGON);
-        glVertex2f(0, 0);
-        glVertex2f(10, 0);
-        glVertex2f(0, 10);
-        glVertex2f(10, 10);
-    glEnd();
-
-    glColor3f(0.0f,0.0f,0.0f);
-    DesenhaTexto("Detectada em outubro de 2020 na India, foi rotulada como variante de preocupação recentemente, em maio. Parece ser a mais contagiosa ate agora.", -145, -50);
-    DesenhaTexto("Estima-se que ela seja entre 40 e 60% mais transmissivel do que a Alfa, tanto que acabou provocando surtos onde esta ja era predominante, como ", -145, -57);
-    DesenhaTexto("o Reino Unido. No Brasil, teve início de alto contagio nos estados do Parana e Maranhao e posteriormente no Rio de Janeiro, mas nao progrediu tao", -145, -64);
-    DesenhaTexto("gravemente como em outras regioes do mundo. Apesar disso, ha registro em todas regiões do pais, inclusive no Vale do Sao Francisco.", -145, -71);
-}
-
 // Função que desenha esfera
-
 void desenhaEsfera(float radius, int numStacks, int numSides)
 {
 //    vec3 points[sides * (sides-1)];
@@ -185,16 +117,66 @@ void desenhaEsfera(float radius, int numStacks, int numSides)
         glNormal3d(curX, curY, curZ);
         glVertex3d(curX, curY, curZ);
     glEnd();
-
 }
 
 
-// Função que desenha um BRASIL
+// Função que desenha a tela de características
+void DesenhaCARACTERISTICAS(void)
+{
+    glColor3f(0.0f,1.0f,0.0f);
+    glTranslatef(0.0f, 60.0f, 0.0f);
+    desenhaEsfera(50.0, 150.0, 2.0);
+    glColor3f(0.0f,0.0f,0.0f);
+    glTranslatef(0.0f, -60.0f, 0.0f);
+
+    DesenhaTexto("Coronavirus (COVID-19): doenca infecciosa causada pelo virus SARS-CoV-2.", -145, -50);
+    DesenhaTexto("A maioria das pessoas que adoece em decorrencia da COVID-19 apresenta sintomas leves a moderados e se recupera sem tratamento especial. ", -145, -57);
+    DesenhaTexto("No entanto, algumas desenvolvem um quadro grave e precisam de atendimento médico. No Brasil, o indice de pessoas infectadas corresponde a", -145, -64);
+    DesenhaTexto("cerca de 10%, e destes, 0,3% foram a obito -- mais de 600 mil mortes no total, figurando entre os paises que mais tiveram mortes em numeros ", -145, -71);
+    DesenhaTexto("absolutos e proporcionais.", -145, -78);
+
+}
+
+// Função que desenha a tela da variante ALFA
+void DesenhaALFA(void)
+{
+    glColor3f(0.0f,0.0f,1.0f);
+    glTranslatef(0.0f, 60.0f, 0.0f);
+    desenhaEsfera(50.0, 150.0, 2.0);
+    glColor3f(0.0f,0.0f,0.0f);
+    glTranslatef(0.0f, -60.0f, 0.0f);
+
+    DesenhaTexto("A primeira variante de preocupação, anteriormente chamada de B.1.1.7. Surgiu no Reino Unido em setembro de 2020. Mutacoes: Sao 22 ao todo, entre as ", -145, -50);
+    DesenhaTexto("que alteram ou nao a estrutura do virus. As principais estao na espicula, membrana que recobre o virus. Transmissibilidade: de 30\% a 50% maior que a", -145, -57);
+    DesenhaTexto("anterior. Tem maior risco de hospitalizacao e maior mortalidade. Foi responsavel pela segunda onda que atacou o Reino Unido e parte da Europa. Chegou ", -145, -64);
+    DesenhaTexto("tambem aos EUA, mas não com tanta forca ao Brasil. Resposta as Vacinas: responde normalmente as existentes. Pode ser verificado pelo resposta imune ", -145, -71);
+    DesenhaTexto("em testes e o avanco da vacinacao dos paises atingidos por ela.", -145, -78);
+
+}
+
+// Função que desenha a tela da variante Delta
+void DesenhaDELTA(void)
+{
+    glColor3f(0.5f,0.5f,0.0f);
+    glTranslatef(0.0f, 60.0f, 0.0f);
+    desenhaEsfera(50.0, 150.0, 2.0);
+    glColor3f(0.0f,0.0f,0.0f);
+    glTranslatef(0.0f, -60.0f, 0.0f);
+
+    DesenhaTexto("Detectada em outubro de 2020 na India, foi rotulada como variante de preocupação recentemente, em maio. Parece ser a mais contagiosa ate agora.", -145, -50);
+    DesenhaTexto("Estima-se que ela seja entre 40 e 60% mais transmissivel do que a Alfa, tanto que acabou provocando surtos onde esta ja era predominante, como ", -145, -57);
+    DesenhaTexto("o Reino Unido. No Brasil, teve início de alto contagio nos estados do Parana e Maranhao e posteriormente no Rio de Janeiro, mas nao progrediu tao", -145, -64);
+    DesenhaTexto("gravemente como em outras regioes do mundo. Apesar disso, ha registro em todas regiões do pais, inclusive no Vale do Sao Francisco.", -145, -71);
+}
+
+// Função que desenha a tela de dados sobre a covid no Brasil
 void DesenhaBRASIL()
 {
     glColor3f(1.0f,0.0f,0.0f);
-	desenhaEsfera(50.0, 150.0, 2.0);
+    glTranslatef(0.0f, 60.0f, 0.0f);
+    desenhaEsfera(50.0, 150.0, 2.0);
     glColor3f(0.0f,0.0f,0.0f);
+    glTranslatef(0.0f, -60.0f, 0.0f);
     DesenhaTexto("BRASIL", -145, -50);
     DesenhaTexto("Total de Casos: 21,7 mi (10% da populacao)", -145, -57);
     DesenhaTexto("Mortes: 604 mil (0,03% da populacao e 0,3% dos infectados)", -145, -64);
@@ -203,78 +185,75 @@ void DesenhaBRASIL()
     DesenhaTexto("Fonte: Google.com, Wikipedia.com, Our World In Data", -145, -127);
 }
 
-// Função que desenha um triângulo
+// Função que desenha a tela de dados sobre a covid na Bahia
 void DesenhaBAHIA(void)
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    glPushMatrix();
-    // Aplica uma translação
-    glTranslatef(35.0f, 0.0f, 0.0f);
-    // Aplica uma rotação ao redor do eixo x
-    glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-    // Altera a cor do desenho para cinza
-    glColor3f(0.0f, 0.0f, 0.0f);
-    // Função da GLUT para fazer o desenho de um "torus"
-    //glutWireTorus(7.0, 14.0, 20, 40);
-    glutWireSphere(20.0, 100.0, 100.0);
-    //void glutWireTorus(GLdouble innerRadius, GLdouble outerRadius, Glint nsides, Glint rings)
-    // Restaura a matriz de transformação corrente da pilha
-    glPopMatrix();
-
-    // Executa os comandos OpenGL
-    glFlush();
+    glColor3f(0.0f,1.0f,1.0f);
+    glTranslatef(0.0f, 60.0f, 0.0f);
+    desenhaEsfera(50.0, 150.0, 2.0);
+    glColor3f(0.0f,0.0f,0.0f);
+    glTranslatef(0.0f, -60.0f, 0.0f);
+    DesenhaTexto("BRASIL", -145, -50);
+    DesenhaTexto("Total de Casos: 21,7 mi (10% da populacao)", -145, -57);
+    DesenhaTexto("Mortes: 604 mil (0,03% da populacao e 0,3% dos infectados)", -145, -64);
+    DesenhaTexto("Vacinacao: 100,4 mi (50% da populacao)", -145, -71);
+    DesenhaTexto("Dados de 20/Out/2021", -145, -120);
+    DesenhaTexto("Fonte: Google.com, Wikipedia.com, Our World In Data", -145, -127);
 }
 
-// Desenha um texto na janela GLUT
-
-
-// Função que desenha um MUNDO
+// Função que desenha a tela de dados sobre a covid no Mundo
 void DesenhaMUNDO(void)
 {
-     glBegin(GL_POLYGON);
-               glVertex2f(-25.0f, 0.0f);
-               glVertex2f(0.0f, 25.0f);
-               glVertex2f(25.0f, 0.0f);
-               glVertex2f(0.0f, -25.0f);
-     glEnd();
-
+    glColor3f(1.0f,0.0f,1.0f);
+    glTranslatef(0.0f, 60.0f, 0.0f);
+    desenhaEsfera(50.0, 150.0, 2.0);
     glColor3f(0.0f,0.0f,0.0f);
-    DesenhaTexto("TESTANDO", 0, 0);
+    glTranslatef(0.0f, -60.0f, 0.0f);
+    DesenhaTexto("BRASIL", -145, -50);
+    DesenhaTexto("Total de Casos: 21,7 mi (10% da populacao)", -145, -57);
+    DesenhaTexto("Mortes: 604 mil (0,03% da populacao e 0,3% dos infectados)", -145, -64);
+    DesenhaTexto("Vacinacao: 100,4 mi (50% da populacao)", -145, -71);
+    DesenhaTexto("Dados de 20/Out/2021", -145, -120);
+    DesenhaTexto("Fonte: Google.com, Wikipedia.com, Our World In Data", -145, -127);
 }
 
 // Função callback chamada para fazer o desenho
 void Desenha(void)
 {
-     glMatrixMode(GL_MODELVIEW);
-     glLoadIdentity();
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-     glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-     // Define a cor corrente
-     glColor3f(r,g,b);
+    // Define a cor corrente
+    glColor3f(r,g,b);
 
-     // Desenha uma dados
-     switch (dados) {
-            case CARACTERISTICAS:  DesenhaCARACTERISTICAS();
-                            break;
-            case ALFA:  DesenhaALFA();
-                            break;
-            case DELTA:  DesenhaDELTA();
-                            break;
-            case BRASIL:  DesenhaBRASIL();
-                            break;
-            case BAHIA: DesenhaBAHIA();
-                            break;
-            case MUNDO:   DesenhaMUNDO();
-                            break;
-     }
+    DesenhaTexto("INFO:", -145, -25);
+    // Caixa de texto
+    glBegin(GL_LINE_LOOP);
+        glVertex2f(-147, -30);
+        glVertex2f(147, -30);
+        glVertex2f(147, -147);
+        glVertex2f(-147, -147);
+    glEnd();
 
-     // Exibe a posição do mouse na janela
-     glColor3f(0.0f,0.0f,0.0f);
-     DesenhaTexto(texto, -win, win-(win*0.08));
+    // Desenha uma dados
+    switch (dados) {
+        case CARACTERISTICAS:  DesenhaCARACTERISTICAS();
+                        break;
+        case ALFA:  DesenhaALFA();
+                        break;
+        case DELTA:  DesenhaDELTA();
+                        break;
+        case BRASIL:  DesenhaBRASIL();
+                        break;
+        case BAHIA: DesenhaBAHIA();
+                        break;
+        case MUNDO:   DesenhaMUNDO();
+                        break;
+    }
 
-     glutSwapBuffers();
+    glutSwapBuffers();
 }
 
 // Inicializa parâmetros de rendering
@@ -286,8 +265,7 @@ void Inicializa (void)
     dados = BRASIL;
     r = 0.0f;
     g = 0.0f;
-    b = 1.0f;
-    strcpy(texto, "(0,0)");
+    b = 0.0f;
 }
 
 // Função usada para especificar o volume de visualização
@@ -405,7 +383,7 @@ int main(int argc, char** argv)
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(1280, 720);
     glutInitWindowPosition(10,10);
-    glutCreateWindow("Exemplo de Menu e Exibição de Caracteres");
+    glutCreateWindow("COVID INFO");
     glutDisplayFunc(Desenha);
     glutReshapeFunc(AlteraTamanhoJanela);
     glutMouseFunc(GerenciaMouse);
