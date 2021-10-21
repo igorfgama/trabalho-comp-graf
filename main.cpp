@@ -179,10 +179,10 @@ void DesenhaBRASIL()
     glTranslatef(0.0f, -60.0f, 0.0f);
     DesenhaTexto("BRASIL", -145, -50);
     DesenhaTexto("Total de Casos: 21,7 mi (10% da populacao)", -145, -57);
-    DesenhaTexto("Mortes: 604 mil (0,03% da populacao e 0,3% dos infectados)", -145, -64);
+    DesenhaTexto("Mortes: 604 mil (0,3% da populacao e 0,3% dos infectados)", -145, -64);
     DesenhaTexto("Vacinacao: 100,4 mi (50% da populacao)", -145, -71);
     DesenhaTexto("Dados de 20/Out/2021", -145, -120);
-    DesenhaTexto("Fonte: Google.com, Wikipedia.com, Our World In Data", -145, -127);
+    DesenhaTexto("Fonte: Google.com, Wikipedia.com, Our World In Data, Ministerio da Saude", -145, -127);
 }
 
 // Função que desenha a tela de dados sobre a covid na Bahia
@@ -194,11 +194,11 @@ void DesenhaBAHIA(void)
     glColor3f(0.0f,0.0f,0.0f);
     glTranslatef(0.0f, -60.0f, 0.0f);
     DesenhaTexto("BRASIL", -145, -50);
-    DesenhaTexto("Total de Casos: 21,7 mi (10% da populacao)", -145, -57);
-    DesenhaTexto("Mortes: 604 mil (0,03% da populacao e 0,3% dos infectados)", -145, -64);
-    DesenhaTexto("Vacinacao: 100,4 mi (50% da populacao)", -145, -71);
+    DesenhaTexto("Total de Casos: 1,24 mi (8,2% da populacao)", -145, -57);
+    DesenhaTexto("Mortes: 26,9 mil (0,17% da populacao e 2,18% dos infectados)", -145, -64);
+    DesenhaTexto("Vacinacao: 6,5 mi (42% da populacao)", -145, -71);
     DesenhaTexto("Dados de 20/Out/2021", -145, -120);
-    DesenhaTexto("Fonte: Google.com, Wikipedia.com, Our World In Data", -145, -127);
+    DesenhaTexto("Fonte: Google.com, Wikipedia.com, Our World In Data, Correio da Bahia, Secretaria de Saude do Estado da Bahia", -145, -127);
 }
 
 // Função que desenha a tela de dados sobre a covid no Mundo
@@ -210,9 +210,9 @@ void DesenhaMUNDO(void)
     glColor3f(0.0f,0.0f,0.0f);
     glTranslatef(0.0f, -60.0f, 0.0f);
     DesenhaTexto("BRASIL", -145, -50);
-    DesenhaTexto("Total de Casos: 21,7 mi (10% da populacao)", -145, -57);
-    DesenhaTexto("Mortes: 604 mil (0,03% da populacao e 0,3% dos infectados)", -145, -64);
-    DesenhaTexto("Vacinacao: 100,4 mi (50% da populacao)", -145, -71);
+    DesenhaTexto("Total de Casos: 219,5 mi (3% da populacao)", -145, -57);
+    DesenhaTexto("Mortes: 4,5 mi (0,06% da populacao)", -145, -64);
+    DesenhaTexto("Vacinacao: 2,9 bi (37% da populacao)", -145, -71);
     DesenhaTexto("Dados de 20/Out/2021", -145, -120);
     DesenhaTexto("Fonte: Google.com, Wikipedia.com, Our World In Data", -145, -127);
 }
